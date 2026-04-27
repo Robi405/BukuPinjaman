@@ -38,7 +38,17 @@
                 
                 <form @submit.prevent="login">
                     <div class="mb-6 text-left">
-                        <input v-model="loginPassword" type="password" placeholder="Masukkan Password..." class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-center tracking-widest font-bold text-lg" required>
+                        <div class="relative">
+                            <input v-model="loginPassword" :type="showLoginPwd ? 'text' : 'password'" placeholder="Masukkan Password..." class="w-full pl-5 pr-14 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-center tracking-widest font-bold text-lg" required>
+                            
+                            <!-- Icon Mata (Tampil/Sembunyi) -->
+                            <button type="button" @click="showLoginPwd = !showLoginPwd" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600 focus:outline-none p-1">
+                                <!-- Icon Mata Tercoret (Sembunyi) -->
+                                <svg v-if="!showLoginPwd" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>
+                                <!-- Icon Mata Terbuka (Tampil) -->
+                                <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            </button>
+                        </div>
                         <p v-if="loginError" class="text-rose-500 text-sm mt-3 text-center font-medium">{{ loginError }}</p>
                     </div>
                     <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-200">
@@ -232,15 +242,29 @@
                             <div class="space-y-3">
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-600 mb-1">Password Lama</label>
-                                    <input v-model="pwdForm.old" type="password" placeholder="••••••••" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                    <div class="relative">
+                                        <input v-model="pwdForm.old" :type="showOldPwd ? 'text' : 'password'" placeholder="••••••••" class="w-full pl-4 pr-10 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                        <button type="button" @click="showOldPwd = !showOldPwd" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600 focus:outline-none p-1">
+                                            <svg v-if="!showOldPwd" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>
+                                            <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-600 mb-1">Password Baru</label>
-                                    <input v-model="pwdForm.new" type="password" placeholder="••••••••" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                    <div class="relative">
+                                        <input v-model="pwdForm.new" :type="showNewPwd ? 'text' : 'password'" placeholder="••••••••" class="w-full pl-4 pr-10 py-2.5 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                                        <button type="button" @click="showNewPwd = !showNewPwd" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600 focus:outline-none p-1">
+                                            <svg v-if="!showNewPwd" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg>
+                                            <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                        </button>
+                                    </div>
                                 </div>
                                 <p v-if="pwdError" class="text-rose-500 text-xs font-medium">{{ pwdError }}</p>
                                 <p v-if="pwdSuccess" class="text-emerald-500 text-xs font-medium">{{ pwdSuccess }}</p>
-                                <button @click="savePassword" class="w-full mt-1 px-4 py-2.5 bg-slate-800 text-white text-sm font-semibold rounded-xl hover:bg-slate-900 transition-colors shadow-md">Simpan Password Baru</button>
+                                <button @click="savePassword" :disabled="isSavingPwd" class="w-full mt-1 px-4 py-2.5 bg-slate-800 text-white text-sm font-semibold rounded-xl hover:bg-slate-900 transition-colors shadow-md disabled:opacity-50">
+                                    {{ isSavingPwd ? 'Menyimpan...' : 'Simpan Password Baru' }}
+                                </button>
                             </div>
                         </div>
 
@@ -350,7 +374,7 @@
     </div>
 
     <script>
-        const { createApp, ref } = Vue;
+        const { createApp, ref, onMounted } = Vue;
 
         createApp({
             setup() {
@@ -358,6 +382,12 @@
                 const isAuthenticated = ref(false);
                 const hasCustomPassword = ref(!!localStorage.getItem('app_password'));
                 const appPassword = ref(localStorage.getItem('app_password') || 'admin');
+                
+                // Toggle state icon mata
+                const showLoginPwd = ref(false);
+                const showOldPwd = ref(false);
+                const showNewPwd = ref(false);
+
                 const loginPassword = ref('');
                 const loginError = ref('');
 
@@ -366,7 +396,6 @@
                     if (loginPassword.value === appPassword.value) {
                         isAuthenticated.value = true;
                         loginError.value = '';
-                        loadData(); // Load data HANYA SETELAH berhasil login
                     } else {
                         loginError.value = 'Password salah, silakan coba lagi!';
                     }
@@ -375,15 +404,18 @@
                 // Fungsi Logout / Kunci
                 const logout = () => {
                     isAuthenticated.value = false;
-                    loginPassword.value = ''; // Kosongkan inputan
+                    loginPassword.value = ''; 
+                    showLoginPwd.value = false;
                 };
 
                 // Fungsi Ubah Password
                 const pwdForm = ref({ old: '', new: '' });
                 const pwdError = ref('');
                 const pwdSuccess = ref('');
+                const isSavingPwd = ref(false);
 
-                const savePassword = () => {
+                // PENYIMPANAN PASSWORD KE SPREADSHEET
+                const savePassword = async () => {
                     pwdError.value = '';
                     pwdSuccess.value = '';
                     
@@ -395,22 +427,56 @@
                         pwdError.value = 'Password lama tidak cocok.';
                         return;
                     }
+
+                    isSavingPwd.value = true;
+                    pwdSuccess.value = 'Meyimpan data ke server...';
                     
-                    // Simpan password baru ke browser
-                    appPassword.value = pwdForm.value.new;
-                    localStorage.setItem('app_password', pwdForm.value.new);
+                    // Simpan ke Google Sheet melalui API Backend
+                    if (typeof google !== 'undefined' && google.script) {
+                        google.script.run.withSuccessHandler(() => {
+                            updateLocalPasswordState(pwdForm.value.new);
+                        }).withFailureHandler((err) => {
+                            pwdError.value = "Gagal menyimpan ke server: " + err;
+                            isSavingPwd.value = false;
+                            pwdSuccess.value = '';
+                        }).saveAppPassword(pwdForm.value.new);
+                    } else if (scriptUrl.value) {
+                        try {
+                            await fetch(scriptUrl.value, {
+                                method: 'POST',
+                                mode: 'no-cors',
+                                body: JSON.stringify({ action: 'updatePassword', password: pwdForm.value.new }),
+                                headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+                            });
+                            updateLocalPasswordState(pwdForm.value.new);
+                        } catch (e) {
+                            pwdError.value = "Gagal koneksi ke server Apps Script.";
+                            isSavingPwd.value = false;
+                            pwdSuccess.value = '';
+                        }
+                    } else {
+                        // Simulasi sukses jika di luar sistem Google
+                        setTimeout(() => { updateLocalPasswordState(pwdForm.value.new); }, 1000);
+                    }
+                };
+
+                const updateLocalPasswordState = (newPwd) => {
+                    appPassword.value = newPwd;
+                    localStorage.setItem('app_password', newPwd);
                     hasCustomPassword.value = true;
                     
+                    isSavingPwd.value = false;
                     pwdSuccess.value = 'Password berhasil diperbarui!';
                     pwdForm.value.old = '';
                     pwdForm.value.new = '';
+                    showOldPwd.value = false;
+                    showNewPwd.value = false;
                     
-                    // Hilangkan notif sukses setelah 3 detik
                     setTimeout(() => { pwdSuccess.value = ''; }, 3000);
-                };
+                }
 
                 // ================= MAIN APP LOGIC =================
-                const loading = ref(false); // Default false saat belum login
+                const loading = ref(false);
                 const selectedDebtor = ref(null);
                 const errorMessage = ref(''); 
                 
@@ -450,15 +516,6 @@
                                 { tipe: 'Pinjaman', tanggal: '2023-11-01', jumlah: 1000000, keterangan: 'Modal usaha warung' },
                                 { tipe: 'Pembayaran', tanggal: '2023-11-15', jumlah: 250000, keterangan: 'Cicilan bulan pertama' }
                             ]
-                        },
-                        "Siti Aminah": {
-                            totalPinjaman: 500000,
-                            totalPembayaran: 100000,
-                            sisa: 400000,
-                            history: [
-                                { tipe: 'Pinjaman', tanggal: '2023-11-05', jumlah: 500000, keterangan: 'Biaya sekolah anak' },
-                                { tipe: 'Pembayaran', tanggal: '2023-11-20', jumlah: 100000, keterangan: '-' }
-                            ]
                         }
                     }
                 });
@@ -475,13 +532,22 @@
                     loadData();
                 };
 
+                // INIT FETCH DATA DARI GOOGLE SPREADSHEET SAAT APLIKASI DIBUKA
                 const loadData = async () => {
                     loading.value = true;
                     errorMessage.value = '';
                     
                     if (typeof google !== 'undefined' && google.script) {
                         google.script.run.withSuccessHandler(res => {
-                            data.value = JSON.parse(res);
+                            const resData = JSON.parse(res);
+                            data.value = resData;
+                            
+                            // SINKRONISASI PASSWORD DARI SPREADSHEET
+                            if (resData.appPassword) {
+                                appPassword.value = resData.appPassword;
+                                localStorage.setItem('app_password', resData.appPassword);
+                                hasCustomPassword.value = (resData.appPassword !== 'admin');
+                            }
                             loading.value = false;
                         }).getAppData();
                     } else if (scriptUrl.value) {
@@ -490,6 +556,12 @@
                             if (!response.ok) throw new Error('Network error');
                             const resData = await response.json();
                             data.value = resData;
+                            
+                            if (resData.appPassword) {
+                                appPassword.value = resData.appPassword;
+                                localStorage.setItem('app_password', resData.appPassword);
+                                hasCustomPassword.value = (resData.appPassword !== 'admin');
+                            }
                         } catch (error) {
                             console.warn("Gagal Fetch URL Eksternal, menggunakan Mock Data.", error);
                             errorMessage.value = "Gagal memuat data dari URL. Beralih ke Mode Simulasi.";
@@ -649,6 +721,11 @@
                     doc.save(`Riwayat_Pinjaman_${debtor.nama.replace(/\s+/g, '_')}.pdf`);
                 };
 
+                // Panggil loadData pertama kali untuk mengambil Password saat web baru saja terbuka
+                onMounted(() => {
+                    loadData();
+                });
+
                 return { 
                     // State & Func Data Aplikasi
                     data, loading, form, submitForm, openDetail, 
@@ -658,7 +735,8 @@
                     
                     // State & Func Keamanan/Login
                     isAuthenticated, loginPassword, loginError, login, logout,
-                    hasCustomPassword, pwdForm, pwdError, pwdSuccess, savePassword
+                    hasCustomPassword, pwdForm, pwdError, pwdSuccess, savePassword, isSavingPwd,
+                    showLoginPwd, showOldPwd, showNewPwd
                 };
             }
         }).mount('#app');
