@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <!-- ========================================================================= -->
+    <!-- PENGATURAN URL DATABASE (SANGAT PENTING)                                  -->
+    <!-- Masukkan URL Web App Google Apps Script Anda pada baris di bawah ini:     -->
+    <!-- ========================================================================= -->
+    <script>
+        const GOOGLE_APPS_SCRIPT_URL = 'MASUKAN_URL_GOOGLE_APPS_SCRIPT_ANDA_DISINI';
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Pinjaman Modern</title>
@@ -267,14 +275,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        <!-- Seksi URL Google Apps Script -->
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-700 mb-2">URL Web App (Integrasi)</label>
-                            <p class="text-xs text-slate-500 mb-3">Masukkan URL Web App jika Anda menjalankan HTML ini di luar ekosistem Google Workspace.</p>
-                            <input v-model="scriptUrl" type="url" placeholder="https://script.google.com/macros/s/..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-colors">
-                            <button @click="saveSettings" class="w-full mt-3 px-5 py-2.5 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-colors shadow-md">Simpan URL</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -481,7 +481,9 @@
                 const errorMessage = ref(''); 
                 
                 const showSettings = ref(false);
-                const scriptUrl = ref(localStorage.getItem('gas_url') || '');
+                
+                // Mengambil URL dari pengaturan di baris paling atas
+                const scriptUrl = ref(GOOGLE_APPS_SCRIPT_URL);
                 
                 const form = ref({
                     nama: '',
@@ -524,12 +526,6 @@
 
                 const formatRp = (value) => {
                     return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(value);
-                };
-
-                const saveSettings = () => {
-                    localStorage.setItem('gas_url', scriptUrl.value);
-                    showSettings.value = false;
-                    loadData();
                 };
 
                 // INIT FETCH DATA DARI GOOGLE SPREADSHEET SAAT APLIKASI DIBUKA
@@ -730,7 +726,7 @@
                     // State & Func Data Aplikasi
                     data, loading, form, submitForm, openDetail, 
                     selectedDebtor, downloadPdf, formatRp,
-                    showSettings, scriptUrl, saveSettings,
+                    showSettings, scriptUrl,
                     formattedJumlah, updateJumlah, errorMessage,
                     
                     // State & Func Keamanan/Login
